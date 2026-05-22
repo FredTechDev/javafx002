@@ -1,28 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="311.0" prefWidth="392.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="school.examinations.RegisterController">
+<VBox alignment="CENTER" prefHeight="650.0" prefWidth="450.0" spacing="20.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="school.examinations.RegisterController">
    <children>
-      <Label layoutX="94.0" layoutY="38.0" text="Enter username and password to register" />
-      <Label layoutX="94.0" layoutY="74.0" text="First Name" />
-      <Label layoutX="94.0" layoutY="98.0" text="Last Name" />
-      <Label layoutX="94.0" layoutY="136.0" text="E-Mail" />
-      <Label layoutX="84.0" layoutY="173.0" text="Username" />
-      <Label layoutX="86.0" layoutY="200.0" text="Password" />
-      <Label layoutX="88.0" layoutY="233.0" text="Confirm Password" />
-      <Button fx:id="cancel" layoutX="140.0" layoutY="268.0" mnemonicParsing="false" text="Cancel" />
-      <Button fx:id="register" layoutX="249.0" layoutY="267.0" mnemonicParsing="false" onAction="#handleRegister" text="Register" />
-      <TextField fx:id="fname" layoutX="192.0" layoutY="70.0" promptText="first name" />
-      <TextField fx:id="lname" layoutX="192.0" layoutY="103.0" promptText="last name" />
-      <TextField fx:id="email" layoutX="192.0" layoutY="132.0" promptText="enter email" />
-      <TextField fx:id="username" layoutX="192.0" layoutY="169.0" promptText="username" />
-      <PasswordField fx:id="password" layoutX="192.0" layoutY="196.0" promptText="password" />
-      <PasswordField fx:id="confirm" layoutX="192.0" layoutY="229.0" promptText="confirm password" />
-      <Label fx:id="emailError" layoutX="197.0" layoutY="153.0" />
+      <VBox styleClass="form-container" spacing="15.0" maxWidth="400.0">
+         <children>
+            <VBox alignment="CENTER" spacing="5.0">
+               <Label styleClass="title-label" text="Create Account" />
+               <Label styleClass="subtitle-label" text="Enter your details to register" />
+            </VBox>
+            
+            <HBox spacing="10.0">
+               <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                  <Label styleClass="field-label" text="First Name" />
+                  <TextField fx:id="fname" styleClass="text-field" promptText="First name" />
+               </VBox>
+               <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                  <Label styleClass="field-label" text="Last Name" />
+                  <TextField fx:id="lname" styleClass="text-field" promptText="Last name" />
+               </VBox>
+            </HBox>
+
+            <VBox spacing="5.0">
+               <Label styleClass="field-label" text="Email" />
+               <TextField fx:id="email" styleClass="text-field" promptText="Enter email" />
+               <Label fx:id="emailError" wrapText="true" />
+            </VBox>
+
+            <VBox spacing="5.0">
+               <Label styleClass="field-label" text="Username" />
+               <TextField fx:id="username" styleClass="text-field" promptText="Choose a username" />
+            </VBox>
+
+            <VBox spacing="5.0">
+               <Label styleClass="field-label" text="Password" />
+               <PasswordField fx:id="password" styleClass="password-field" promptText="Enter password" />
+            </VBox>
+
+            <VBox spacing="5.0">
+               <Label styleClass="field-label" text="Confirm Password" />
+               <PasswordField fx:id="confirm" styleClass="password-field" promptText="Confirm password" />
+            </VBox>
+
+            <HBox alignment="CENTER" spacing="15.0" style="-fx-padding: 10 0 0 0;">
+               <Button fx:id="cancel" styleClass="button-secondary" mnemonicParsing="false" text="Cancel" prefWidth="120.0" />
+               <Button fx:id="register" styleClass="button-primary" mnemonicParsing="false" onAction="#handleRegister" text="Register" prefWidth="120.0" />
+            </HBox>
+
+         </children>
+      </VBox>
    </children>
-</AnchorPane>
+</VBox>

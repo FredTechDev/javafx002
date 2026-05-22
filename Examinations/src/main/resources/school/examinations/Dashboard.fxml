@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="mainPane" prefHeight="768.0" prefWidth="1024.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="school.examinations.DashboardController">
+   
+   <left>
+      <VBox prefWidth="250.0" style="-fx-background-color: #1e293b; -fx-padding: 20;" spacing="15.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="School Portal" style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold; -fx-padding: 0 0 20 0;"/>
+            <Label fx:id="userLabel" text="User" style="-fx-text-fill: #94a3b8; -fx-font-size: 14px;"/>
+            <Button mnemonicParsing="false" onAction="#handleProfile" text="My Profile" styleClass="button-secondary" maxWidth="Infinity" />
+            <Button mnemonicParsing="false" onAction="#handleResults" text="My Results" styleClass="button-secondary" maxWidth="Infinity" />
+            <VBox VBox.vgrow="ALWAYS" />
+            <Button mnemonicParsing="false" onAction="#handleLogout" text="Logout" style="-fx-background-color: #ef4444; -fx-text-fill: white;" styleClass="button-secondary" maxWidth="Infinity" />
+         </children>
+      </VBox>
+   </left>
+   
+   <center>
+      <!-- Content area will be dynamically loaded by controller -->
+   </center>
+   
+</BorderPane>

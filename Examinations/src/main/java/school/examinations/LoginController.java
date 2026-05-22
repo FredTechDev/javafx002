@@ -1,6 +1,6 @@
 package school.examinations;
 
-import javafx.beans.value.ChangeListener;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,11 +13,11 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import school.examinations.dao.UserDAO;
+import school.examinations.util.AuthService;
+import school.examinations.util.SessionManager;
+
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class LoginController {
     @FXML private Button cancel;
@@ -26,23 +26,15 @@ public class LoginController {
     @FXML private PasswordField pass;
     @FXML private Label error;
 
-    // Regex breakdown:
-    // (?=.*[A-Z]) -> At least one uppercase letter
-    // (?=.*\d)    -> At least one digit
-    // (?=.*[\W_]) -> At least one special character (non-word character or underscore)
-    // .{1,}       -> At least 1 character long total
-    private static final String PASSWORD_PATTERN = "^(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_]).{1,}$";
+    private UserDAO userDAO = new UserDAO();
+
     @FXML
-    public void handleRegister(ActionEvent event) throws IOException
-    {
+    public void handleRegister(ActionEvent event) throws IOException {
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setTitle("Register Page");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Register.fxml"));
         Parent root = loader.load();
-
-        Scene scene = new Scene(root);
-
-        stage.setScene(scene);
+        stage.setScene(new Scene(root));
         stage.show();
     }
 
@@ -50,59 +42,60 @@ public class LoginController {
     public void handleCancel(ActionEvent event) {
         user.clear();
         pass.clear();
-        Connection conn = Connect.connection();
-        if(conn!=null)
-            System.out.println("Connection Successful");
-        else
-            System.out.println("Connection Failed");
+        error.setText("");
     }
+
     @FXML
-    public void handleLogin(ActionEvent event) throws SQLException, IOException {
-        Connection con = Connect.connection();
-        String usersql = "SELECT username FROM users WHERE username=?";
-        PreparedStatement pstuser = con.prepareStatement(usersql);
-        pstuser.setString(1, user.getText());
-        ResultSet rsuser = pstuser.executeQuery();
-        if(rsuser.next()){
-            System.out.println(rsuser.getString("username") + " Found");
-            String sqlpass = "SELECT password FROM users WHERE username=?";
-            PreparedStatement pstpass = con.prepareStatement(sqlpass);
-            pstpass.setString(1, user.getText());
-            ResultSet rspass = pstpass.executeQuery();
-            if(rspass.next()){
-                Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-                stage.setTitle("Student Details");
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("StudentDetails.fxml"));
-                Parent root = loader.load();
+    public void handleLogin(ActionEvent event) {
+        String username = user.getText();
+        String password = pass.getText();
 
-                Scene scene = new Scene(root);
-
-                stage.setScene(scene);
-                stage.show();
-            }
+        if (username.isEmpty() || password.isEmpty()) {
+            showError("Username and password required.");
+            return;
         }
-        else{
-            System.out.println(user.getText() + " not found");
+
+        String storedHash = userDAO.getHashedPassword(username);
+
+        if (storedHash != null && AuthService.checkPassword(password, storedHash)) {
+            // Login successful
+            SessionManager.getInstance().setCurrentUser(username);
+            navigateToDashboard(event);
+        } else {
+            showError("Invalid username or password.");
         }
     }
+
+    private void navigateToDashboard(ActionEvent event) {
+        try {
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage.setTitle("School Portal Dashboard");
+            // maximize the window to fit the dashboard nicely
+            stage.setWidth(1024);
+            stage.setHeight(768);
+            stage.centerOnScreen();
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
+            Parent root = loader.load();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showError(String msg) {
+        error.setText(msg);
+        error.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
+        
+        PauseTransition delay = new PauseTransition(javafx.util.Duration.seconds(3));
+        delay.setOnFinished(e -> error.setText(""));
+        delay.play();
+    }
+
     public void initialize() {
-        if(pass != null) {
-            // Add a listener to validate the password in real-time as the user types
-            pass.textProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    error.setText("Password is required");
-                    error.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
-                } else if (newValue.matches(PASSWORD_PATTERN)) {
-                    error.setText("✔ Password is valid!");
-                    error.setStyle("-fx-text-fill: green; -fx-font-weight: bold;");
-                } else {
-                    error.setText("❌ Invalid password structure");
-                    error.setStyle("-fx-text-fill: red; -fx-font-weight: bold;");
-                }
-            });
+        if (error != null) {
+            error.setText("");
         }
-        else
-            System.out.println("Error: 'pass' field was not injected!");
     }
-
 }

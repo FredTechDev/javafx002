@@ -1,0 +1,177 @@
+/* style.css - Market Standard Premium Theme */
+.root {
+    -fx-background-color: #f8fafc;
+    -fx-font-family: "Inter", "Segoe UI", "Helvetica Neue", sans-serif;
+}
+
+/* Base Form Container - Floating Card Effect */
+.form-container {
+    -fx-background-color: white;
+    -fx-padding: 40;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 20, 0, 0, 8);
+}
+
+/* Typography */
+.title-label {
+    -fx-font-size: 28px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #0f172a;
+}
+
+.subtitle-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #64748b;
+}
+
+.field-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #334155;
+}
+
+/* Input Fields - Clean Outline Design */
+.text-field, .password-field, .combo-box, .text-area {
+    -fx-font-size: 14px;
+    -fx-padding: 12 16 12 16;
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-border-width: 1px;
+    -fx-text-fill: #1e293b;
+}
+
+.text-field:focused, .password-field:focused, .combo-box:focused, .text-area:focused {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #3b82f6;
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.25), 8, 0, 0, 0);
+}
+
+/* Primary Button - Gradient & Shadow */
+.button-primary {
+    -fx-background-color: linear-gradient(to right, #2563eb, #3b82f6);
+    -fx-text-fill: white;
+    -fx-font-weight: 700;
+    -fx-font-size: 14px;
+    -fx-padding: 12 24 12 24;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(37, 99, 235, 0.4), 10, 0, 0, 4);
+}
+
+.button-primary:hover {
+    -fx-background-color: linear-gradient(to right, #1d4ed8, #2563eb);
+}
+
+.button-primary:pressed {
+    -fx-background-color: #1e40af;
+    -fx-effect: none;
+    -fx-translate-y: 1px;
+}
+
+/* Secondary Button - Subtle Grey */
+.button-secondary {
+    -fx-background-color: #f1f5f9;
+    -fx-text-fill: #475569;
+    -fx-font-weight: 700;
+    -fx-font-size: 14px;
+    -fx-padding: 12 24 12 24;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 8;
+}
+
+.button-secondary:hover {
+    -fx-background-color: #e2e8f0;
+    -fx-text-fill: #334155;
+}
+
+.button-secondary:pressed {
+    -fx-background-color: #cbd5e1;
+}
+
+/* Hyperlinks */
+.hyperlink {
+    -fx-text-fill: #3b82f6;
+    -fx-border-color: transparent;
+    -fx-font-weight: 600;
+}
+.hyperlink:hover {
+    -fx-underline: true;
+    -fx-text-fill: #2563eb;
+}
+
+/* Sidebar Customizations (for Dashboard) */
+.sidebar {
+    -fx-background-color: #0f172a;
+}
+.sidebar .label {
+    -fx-text-fill: #f8fafc;
+}
+.sidebar .button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: #cbd5e1;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12 20 12 20;
+    -fx-font-weight: 600;
+}
+.sidebar .button:hover {
+    -fx-background-color: #1e293b;
+    -fx-text-fill: white;
+}
+
+/* TableView Styling */
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #f8fafc;
+    -fx-background-radius: 8 8 0 0;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: transparent;
+    -fx-size: 40;
+    -fx-border-color: transparent transparent #e2e8f0 transparent;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 13px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #475569;
+}
+
+.table-row-cell {
+    -fx-cell-size: 45;
+    -fx-border-color: transparent transparent #f1f5f9 transparent;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #f8fafc;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #e2e8f0;
+}
+
+/* DatePicker Styling */
+.date-picker {
+    -fx-background-color: transparent;
+}
+.date-picker > .text-field {
+    -fx-background-color: #f8fafc;
+    -fx-border-color: #e2e8f0;
+    -fx-border-radius: 8 0 0 8;
+    -fx-background-radius: 8 0 0 8;
+}
+.date-picker > .arrow-button {
+    -fx-background-color: #e2e8f0;
+    -fx-background-radius: 0 8 8 0;
+}
